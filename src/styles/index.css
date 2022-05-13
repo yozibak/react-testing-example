@@ -1,0 +1,161 @@
+
+:root {
+  --color-main: rgb(20, 20, 255);
+  --color-main-mellow: rgba(20, 20, 255, 0.1);
+  --color-panel: white;
+  --color-bg: rgb(214, 214, 214);
+  --color-text: black;
+  --page-width: min(100%,780px);
+  --space: 1.25rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+html,body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/** Components **/
+
+.header {
+  background-color: var(--color-panel);
+  padding: 1rem;
+}
+.header > div {
+  width: var(--page-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pagebody {
+  width: var(--page-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  position: relative;
+}
+.pagebody > div {
+  width: 100%;
+}
+
+.card {
+  margin: var(--space);
+  padding: var(--space);
+  background-color: var(--color-panel);
+  border-radius: .5rem;
+}
+
+/** Pages **/
+
+.home div {
+  margin-top: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dashboard {
+  max-height: 100%;
+  overflow: scroll;
+}
+
+.todo-cards {
+  max-height: 80vh;
+  overflow: scroll;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.todo {
+  font-size: 1.15rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.todo > div:first-child > * {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.todo:hover {
+  position: relative;
+  top: -2px;
+}
+.todo.completed {
+  background-color: var(--color-main-mellow);
+}
+
+.detail> div:first-child {
+  font-weight: bold;
+  margin-bottom: var(--space);
+}
+
+.back-to-dashboard {
+  font-size: 0.85rem;
+  margin-top: 3rem;
+}
+
+/** Elements **/
+
+button {
+  background-color: var(--color-main-mellow);
+  color: var(--color-main);
+  padding: .25rem .75rem;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  opacity: 0.8;
+}
+button.add-todo {
+  background-color: var(--color-panel);
+  font-size: 1rem;
+  padding: .5rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  display: block;
+  margin: 2rem auto;
+}
+button.discard {
+  background-color: transparent;
+}
+
+a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  gap: 1rem;
+}
+form > label {
+  align-self: center;
+}
+form > button {
+  grid-column: span 2;
+}
+
+input {
+  font-size: 1.1rem;
+}
