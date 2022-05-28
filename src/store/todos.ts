@@ -1,5 +1,4 @@
-import { createContext, useEffect, useState } from "react"
-import { User } from "./auth"
+import { useEffect, useState } from "react"
 
 export type Todo = {
   id: number
@@ -8,28 +7,17 @@ export type Todo = {
   memo?: string
 }
 
-type CreateTodo = Omit<Todo, 'id'>
+export type CreateTodo = Omit<Todo, 'id'>
 
-interface TodoStore {
-  todos: Todo[]
-  createTodo: (todo: CreateTodo) => void
-  updateTodo: (todo: Todo) => void
-  deleteTodo: (id: number) => void
-}
-
-export const TodoContext = createContext({} as TodoStore)
-
-export const useTodoStore = (user?: User) => {
+export const useTodoStore = (user?: string) => {
 
   const [todos, setTodos] = useState<Todo[]>([])
 
   useEffect(() => {
-    if (user && user.name === 'Katsumi') {
-      setTodos(MyInitialTodos) // retrieve from pseudo db
-    } else {
-      setTodos([])
+    if(user) {
+      setTodos(MyInitialTodos)
     }
-  }, [user, setTodos])
+  }, [user])
 
   const createTodo = (todo: CreateTodo) => {
     const id = todos.length + 1

@@ -1,12 +1,9 @@
-import { Paths } from "Pages"
 import { ChangeEvent, FormEvent, useState } from "react"
-import { useContext } from "react"
-import { Link } from "react-router-dom"
-import { Todo, TodoContext } from "store/todos"
+import { CreateTodo, Todo, useTodoStore } from "store/todos"
 
 export const Dashboard = () => {
 
-  const { todos, updateTodo, deleteTodo } = useContext(TodoContext)
+  const { todos, createTodo, updateTodo, deleteTodo } = useTodoStore('user')
 
   const toggleTodoStatus = (todo: Todo) => {
     updateTodo({ ...todo, completed: !todo.completed })
@@ -22,9 +19,7 @@ export const Dashboard = () => {
               <div>
                 <input type="checkbox" checked={t.completed} onChange={() => toggleTodoStatus(t)}/>
                 <div className="todo__title">
-                  <Link to={`${Paths.detail}/${t.id}`}>
-                    {t.title}
-                  </Link>
+                  {t.title}
                 </div>
               </div>
               <button className="discard" onClick={() => deleteTodo(t.id)}>
@@ -33,17 +28,15 @@ export const Dashboard = () => {
             </div>
           ))
         }
-        <AddTodo />
+        <AddTodo createTodo={createTodo}/>
       </div>
     </div>
   )
 }
 
-const AddTodo = () => {
+const AddTodo = ({createTodo}: {createTodo: (t:CreateTodo) => void}) => {
 
   const [open, setOpen] = useState(false)
-
-  const { createTodo } = useContext(TodoContext)
 
   const [formState, setFormState] = useState({title: '', memo: ''})
 

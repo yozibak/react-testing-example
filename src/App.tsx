@@ -1,20 +1,23 @@
-import { Pages } from "Pages";
-import { BrowserRouter } from "react-router-dom";
-import { AuthContext, useAuthStore } from "store/auth";
-import { TodoContext, useTodoStore } from "store/todos";
+import { Dashboard } from "pages/Dashboard";
 
 export default function App() {
-
-  const authStore = useAuthStore()
-  const todoStore = useTodoStore(authStore.user)
   
   return (
-    <AuthContext.Provider value={authStore}>
-      <TodoContext.Provider value={todoStore}>
-        <BrowserRouter>
-          <Pages />
-        </BrowserRouter>
-      </TodoContext.Provider>
-    </AuthContext.Provider>
+    <>
+      <div className="header">
+        <div>
+          <div>
+            Simple Todo App
+          </div>
+
+          <button>
+            Log Out
+          </button>
+        </div>
+      </div>
+      <div className="pagebody">
+        <Dashboard />
+      </div>    
+    </>
   );
 }

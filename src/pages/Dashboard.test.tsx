@@ -1,28 +1,17 @@
 import '@testing-library/jest-dom'
-import { Paths } from 'Pages'
-import { renderWithProviderAndRoutes } from '__utils__/testRender'
 import { Dashboard } from './Dashboard'
 import userEvent from '@testing-library/user-event'
-import { Users } from 'store/auth'
 import { MyInitialTodos } from 'store/todos'
-import { screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 
-const user = Users.find(u => u.name === 'Katsumi')
 const myTodo = MyInitialTodos[0]
 
 describe('Dashboard todos list', () => {
 
-  it("shows his/her own todos", async () => {
-    const {findByText} = renderWithProviderAndRoutes(<Dashboard />, { path: Paths.dashboard, user })
+  it("shows initial todos", async () => {
+    const {findByText} = render(<Dashboard />)
 
     expect(await findByText(myTodo.title)).toBeInTheDocument()
-  })
-
-  it("shows another user's todos when auth changed", () => {
-    const another = Users.find(u => u.name !== 'Katsumi')
-    renderWithProviderAndRoutes(<Dashboard />, { path: Paths.dashboard, user: another })
-
-    expect(screen.queryByText(myTodo.title)).not.toBeInTheDocument()
   })
 })
 
@@ -32,7 +21,7 @@ describe('Create todo', () => {
 
     const {
       getByRole, findByLabelText, findByRole, findByText
-    } = renderWithProviderAndRoutes(<Dashboard />, { path: Paths.dashboard, user })
+    } = render(<Dashboard />)
 
     // Act
     userEvent.click(getByRole('button', { name: '+' }))
@@ -62,7 +51,7 @@ describe('Complete todo', () => {
     const {
       getAllByRole,
       container
-    } = renderWithProviderAndRoutes(<Dashboard />, { path: Paths.dashboard, user })
+    } = render(<Dashboard />)
 
     // before
     const checkbox = getAllByRole('checkbox')[0]
@@ -88,7 +77,7 @@ describe('Delete todo', () => {
       getAllByRole,
       getByText,
       queryByText,
-    } = renderWithProviderAndRoutes(<Dashboard />, { path: Paths.dashboard, user })
+    } = render(<Dashboard />)
 
     // before
     const btn = getAllByRole('button', {name: '🗑'})[0]
@@ -99,18 +88,5 @@ describe('Delete todo', () => {
 
     // Assert
     expect(queryByText(myTodo.title)).not.toBeInTheDocument()
-  })
-})
-
-describe('View detail', () => {
-  it('sends users to detail view when the todo title is clicked', () => {
-    const {
-      getByText,
-      history
-    } = renderWithProviderAndRoutes(<Dashboard />, { path: Paths.dashboard, user })  
-
-    userEvent.click(getByText(myTodo.title))
-
-    expect(history.location.pathname).toBe(`${Paths.detail}/${myTodo.id}`)
   })
 })
